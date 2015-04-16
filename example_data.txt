@@ -1,0 +1,4 @@
+# One domain per line. Lines with # are skipped.
+messageagency.com
+google.com
+www.nytimes.com	
