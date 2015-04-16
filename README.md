@@ -15,8 +15,8 @@ optional arguments:
                         File to print results into
 ```
 
-### Useful information
+### CA Cert information
 
-The current list of CA's from Mozilla is here: http://curl.haxx.se/ca/cacert.pem
-
-Or as text here: http://hg.mozilla.org/mozilla-central/file/tip/security/nss/lib/ckfw/builtins/certdata.txt
+To make sure Python can quickly find a list of CA Certs you can borrow Mozilla's: http://curl.haxx.se/docs/caextract.html
+The pem down load is here: http://curl.haxx.se/ca/cacert.pem
+And from Mozilla directly here: http://hg.mozilla.org/mozilla-central/file/tip/security/nss/lib/ckfw/builtins/certdata.txt

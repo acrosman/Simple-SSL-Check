@@ -11,6 +11,8 @@ import sys
 import ssl
 import subprocess
 import csv
+import os.path
+import urllib.request
 
 
 data_file = None
@@ -25,20 +27,33 @@ clean_keys = [k[:-1].strip() for k in key_words]  # remove : from keys for csv
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-f', '--file', help="File with domains (one per line)",
-                    required=True)
+parser.add_argument('-f', '--file', help="File with domains (one per line)")
 parser.add_argument('-v', '--verbose', help="Output extra information",
                     action="store_true")
 parser.add_argument('-q', '--quiet', help="Suppress all output",
                     action="store_true")
 parser.add_argument('-o', '--outfile', help="File to print results into")
-
+parser.add_argument('--get-certs', help=
+                    "Download the CA Certs currently in use by Mozilla.",
+                    action="store_true")
 
 args = parser.parse_args()
 
 # Only allow verbose or quiet, not both
 if args.verbose and args.quiet:
     print("Cannot run in verbose mode quietly. Select one not both.")
+
+# If the user asked to load the CA set, do that.
+if args.get_certs:
+    cafile = urllib.request.urlopen("http://curl.haxx.se/ca/cacert.pem")
+    output = open('cacert.pem', 'wb')
+    output.write(cafile.read())
+    output.close()
+    exit()
+elif args.file is None:
+    print("Input file of domains is required.")
+    exit()
+
 
 # Check/setup input file.
 try:
