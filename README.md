@@ -14,3 +14,9 @@ optional arguments:
   -o OUTFILE, --outfile OUTFILE
                         File to print results into
 ```
+
+### Useful information
+
+The current list of CA's from Mozilla is here: http://curl.haxx.se/ca/cacert.pem
+
+Or as text here: http://hg.mozilla.org/mozilla-central/file/tip/security/nss/lib/ckfw/builtins/certdata.txt
