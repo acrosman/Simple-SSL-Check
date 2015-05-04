@@ -22,7 +22,8 @@ checked_domains = {}  # Use a dictionary to avoid dupicates in saved results
 key_words = ['Signature Algorithm:',
              'Not Before:',
              'Not After :',
-             'Issuer:']
+             'Issuer:',
+             'DNS:']
 clean_keys = [k[:-1].strip() for k in key_words]  # remove : from keys for csv
 
 
@@ -106,6 +107,17 @@ for domain in data_file:
                             line.strip()[len(key):].strip()
                         if args.verbose:
                             print(line.strip())
+                        if key == "DNS:":
+                            # DNS is a special case since we want to check for a match
+                            entries = line.strip().split(",")
+                            match = False
+                            for entry in entries:
+                                if domain.casefold() == entry.casefold():
+                                    match = True
+                                    break
+                            if not match:
+                                checked_domains[domain]['Errors'] = \
+                                    "Domain match failed."
 
         except Exception as e:
             checked_domains[domain]['Errors'] = e
