@@ -22,3 +22,8 @@ This script will look for a list of CA root certificates in a cacert.pem file. I
 For more about the copy that gets downloaded see: http://curl.haxx.se/docs/caextract.html
 Their pem download files is here: http://curl.haxx.se/ca/cacert.pem
 And directly from Mozilla here: http://hg.mozilla.org/mozilla-central/file/tip/security/nss/lib/ckfw/builtins/certdata.txt
+
+## Known Issues
+
+* Does not check wildcard certificates to see it they match the current domain.
+* Self-signed certs are registered as errors.

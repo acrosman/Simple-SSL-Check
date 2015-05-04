@@ -103,21 +103,24 @@ for domain in data_file:
             for line in cert_data.split('\n'):
                 for key in key_words:
                     if line.strip()[:len(key)] == key:
-                        checked_domains[domain][key[:-1].strip()] = \
-                            line.strip()[len(key):].strip()
-                        if args.verbose:
-                            print(line.strip())
                         if key == "DNS:":
                             # DNS is a special case since we want to check for a match
                             entries = line.strip().split(",")
                             match = False
                             for entry in entries:
+                                entry = entry.strip()[len(key):]
                                 if domain.casefold() == entry.casefold():
                                     match = True
                                     break
                             if not match:
                                 checked_domains[domain]['Errors'] = \
                                     "Domain match failed."
+                            checked_domains[domain]["DNS"] = line.strip()
+                        else:
+                            checked_domains[domain][key[:-1].strip()] = \
+                                line.strip()[len(key):].strip()
+                        if args.verbose:
+                            print(line.strip())
 
         except Exception as e:
             checked_domains[domain]['Errors'] = e
